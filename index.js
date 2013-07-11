@@ -9,35 +9,43 @@ var express = require('express'),
   poweredBy = require('connect-powered-by');
 
 module.exports = {
-    run: function(rootDirectory, callback) {
+    run: function(rootDirectory, applicationCallback) {
+        if (typeof rootDirectory != 'string') {
+            throw new Error('Root directory is required - ' + rootDirectory + ' is not a string');
+        }
+
         var local = null,
-            app = null;
+            app = null,
+            db = null;
 
         async.waterfall([
             function checkRootDirectory(callback) {
                 fs.exists(rootDirectory, function(exists) {
                     if (!exists) {
-                        callback(new Error('Root directory is required - ' + rootDirectory + ' does not exists'));
+                        return callback(new Error('Root directory is required - ' + rootDirectory + ' does not exists'));
                     }
                     callback();
                 });
             },
-            function loadLocalConfig(app, callback) {
-                var localFile = path.resolve(rootDirectory, '/local.js');
+            function loadLocalConfig(callback) {
+                var localFile = path.resolve(rootDirectory, 'local.js');
                 fs.exists(localFile, function(exists) {
                     if (!exists) {
-                        callback(new Error('Local configuration file is required - ' + localFile + ' does not exist'));
+                        return callback(new Error('Local configuration file is required - ' + localFile + ' does not exist'));
                     }
                     local = require(localFile);
                     app = express();
-                    callback(app);
+                    callback();
                 });
             },
             function nunjucks(callback) {
                 require('./lib/initialisers/nunjucks')(rootDirectory, app, callback);
             },
-            function mongoose(app, callback) {
-                require('./lib/initialisers/mongoose')(app, local, callback);
+            function mongoose(callback) {
+                require('./lib/initialisers/mongoose')(app, local, function(error, mongoose) {
+                    db = mongoose;
+                    callback(error);
+                });
             },
             function applicationSetup(callback) {
                 app.use(express.bodyParser());
@@ -82,8 +90,13 @@ module.exports = {
                 var initialisersDirectory = path.join(rootDirectory, 'initialisers');
                 fs.readdir(initialisersDirectory, function(err, files) {
                     if (err) return callback(err);
-                    async.eachSeries(files, function runInitialiser(initialiser, callback) {
-                        require(path.join(initialisersDirectory, file)).call(app, local, callback);
+                    async.eachSeries(files, function runInitialiser(initialiserFile, eachSeriesCallback) {
+                        if (err) return eachSeriesCallback(err);
+                        if (initialiserFile.search(new RegExp(/^\./)) !== -1) {
+                            return eachSeriesCallback();
+                        }
+                        var initialiser = path.join(initialisersDirectory, initialiserFile);
+                        require(initialiser)(rootDirectory, app, db, local, eachSeriesCallback);
                     }, function(err) {
                         callback(err);
                     });
@@ -91,11 +104,11 @@ module.exports = {
             },
             function loadApplicationControllers(callback) {
                 controllerLoader.load(path.resolve(path.join(rootDirectory, 'controllers')), function(controller) {
-                    require(controller)({ app: app });
+                    require(controller)({ app: app, local: local });
                 });
+                callback();
             },
             function finalApplicationSetup(callback) {
-
                 app.use(poweredBy('duffel'));
                 app.use(express.logger());
                 app.use(express.favicon());
@@ -123,10 +136,10 @@ module.exports = {
                     res.status(500);
                     res.render('errors/500.html');
                 });
+                callback();
             }
-        ], function finalise(error, callback) {
-            if (error) throw error;
-            callback(app, local);
+        ], function(error) {
+            applicationCallback(error, app, local);
         });
     }
 }

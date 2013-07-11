@@ -6,6 +6,6 @@
     "async": "0.2.x",
     "nunjucks": "0.1.x",
     "nunjucks-append": "0.0.x",
-    "mongoose": "3.6.x",
+    "mongoose": "3.6.x"
   }
 }
