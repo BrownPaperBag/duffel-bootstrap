@@ -61,7 +61,7 @@ module.exports = {
                 app.use(express.session({
                     secret: local.session.secret,
                     store: new MongoStore({
-                        db: app.database.common
+                        db: app.database.common()
                     })
                 }));
                 app.use(express.csrf({
