@@ -15,8 +15,7 @@ module.exports = {
         }
 
         var local = null,
-            app = null,
-            db = null;
+            app = null;
 
         async.waterfall([
             function checkRootDirectory(callback) {
@@ -27,25 +26,31 @@ module.exports = {
                     callback();
                 });
             },
-            function loadLocalConfig(callback) {
+            function loadDatabase(callback) {
+                var databaseConfigFile = path.resolve(rootDirectory, 'database.js');
+                fs.exists(databaseConfigFile, function(exists) {
+                    if (!exists) {
+                        return callback(new Error('Database config file is required - ' + databaseConfigFile + ' does not exist'));
+                    }
+                    callback(null, require(databaseConfigFile));
+                });
+            },
+            function loadLocalConfig(database, callback) {
                 var localFile = path.resolve(rootDirectory, 'local.js');
                 fs.exists(localFile, function(exists) {
                     if (!exists) {
                         return callback(new Error('Local configuration file is required - ' + localFile + ' does not exist'));
                     }
                     local = require(localFile);
+
                     app = express();
+                    app.database = database;
+
                     callback();
                 });
             },
             function nunjucks(callback) {
                 require('./lib/initialisers/nunjucks')(rootDirectory, app, callback);
-            },
-            function mongoose(callback) {
-                require('./lib/initialisers/mongoose')(app, local, function(error, mongoose) {
-                    db = mongoose;
-                    callback(error);
-                });
             },
             function applicationSetup(callback) {
                 app.use(express.bodyParser());
@@ -56,7 +61,7 @@ module.exports = {
                 app.use(express.session({
                     secret: local.session.secret,
                     store: new MongoStore({
-                        db: mongoose.connection.db
+                        db: app.database.common
                     })
                 }));
                 app.use(express.csrf({
@@ -96,7 +101,7 @@ module.exports = {
                             return eachSeriesCallback();
                         }
                         var initialiser = path.join(initialisersDirectory, initialiserFile);
-                        require(initialiser)(rootDirectory, app, db, local, eachSeriesCallback);
+                        require(initialiser)(rootDirectory, app, local, eachSeriesCallback);
                     }, function(err) {
                         callback(err);
                     });
@@ -109,8 +114,9 @@ module.exports = {
                 callback();
             },
             function finalApplicationSetup(callback) {
+
                 app.use(poweredBy('duffel'));
-                app.use(express.logger());
+                app.use(express.logger('dev'));
                 app.use(express.favicon());
                 app.use(express.static(path.join(rootDirectory, '/public')));
                 app.use(app.router);
@@ -137,7 +143,7 @@ module.exports = {
                     res.render('errors/500.html');
                 });
                 callback();
-            }
+            },
         ], function(error) {
             applicationCallback(error, app, local);
         });
