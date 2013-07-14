@@ -44,6 +44,7 @@ module.exports = {
                     local = require(localFile);
 
                     app = express();
+                    app.set('rootUrl', local.rootUrl);
                     app.database = database;
 
                     callback();
