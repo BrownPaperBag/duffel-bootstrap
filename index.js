@@ -57,11 +57,10 @@ module.exports = {
                 app.use(express.methodOverride());
 
                 app.use(express.cookieParser(local.cookie.secret));
-                app.use(express.cookieSession());
                 app.use(express.session({
                     secret: local.session.secret,
                     store: new MongoStore({
-                        db: app.database.common()
+                      db: app.database.common().db
                     })
                 }));
                 app.use(express.csrf({
@@ -138,7 +137,6 @@ module.exports = {
                         res.status(403);
                         return res.render('errors/403.html');
                     }
-                    console.error(error);
                     res.status(500);
                     res.render('errors/500.html');
                 });
