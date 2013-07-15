@@ -12,6 +12,7 @@
   "dependencies": {
     "controller-loader": "0.0.x",
     "async": "0.2.x",
+    "express": "3.x.x",
     "nunjucks": "0.1.x",
     "nunjucks-append": "0.0.x",
     "connect-mongo": "0.3.x",
