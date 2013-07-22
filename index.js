@@ -109,6 +109,7 @@ module.exports = {
           res.locals.user = req.user;
           res.locals._csrf = req.session._csrf;
           res.locals.flash = req.flash();
+          res.locals.now = new Date();
           next();
         });
         callback();
