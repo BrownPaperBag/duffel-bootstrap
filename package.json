@@ -18,6 +18,7 @@
     "connect-mongo": "0.3.x",
     "connect-flash": "0.1.x",
     "connect-powered-by": "0.1.x",
-    "mongoose": "3.6.x"
+    "mongoose": "3.6.x",
+    "assetify": "0.8.x"
   }
 }
