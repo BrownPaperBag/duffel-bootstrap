@@ -9,6 +9,7 @@ module.exports = {
     }
 
     var app = express();
+    app.set('assetify', require('assetify').instance());
 
     var database = require('./lib/initialisers/database'),
       local = require('./lib/initialisers/local'),
@@ -17,6 +18,7 @@ module.exports = {
       initialisers = require('./lib/initialisers/initialisers'),
       intermediateMiddleware = require('./lib/initialisers/intermediate-middleware'),
       applicationControllers = require('./lib/initialisers/application-controllers'),
+      assetifyCompile = require('./lib/initialisers/assetify-compile'),
       finalSetup = require('./lib/initialisers/final-setup');
 
     async.waterfall([
@@ -34,6 +36,7 @@ module.exports = {
       application,
       initialisers,
       intermediateMiddleware,
+      assetifyCompile,
       applicationControllers,
       finalSetup,
     ], function(error) {
