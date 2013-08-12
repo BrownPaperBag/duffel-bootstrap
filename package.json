@@ -5,9 +5,9 @@
   "description": "Provides a convenient bootstrapper for a typical website",
   "contributors": [
     {
-    "name": "Michael Robinson",
-    "email": "mike@pagesofinterest.net"
-  }
+      "name": "Michael Robinson",
+      "email": "mike@pagesofinterest.net"
+    }
   ],
   "dependencies": {
     "controller-loader": "0.0.x",
