@@ -8,7 +8,7 @@ module.exports = {
       throw new Error('Root directory is required - ' + rootDirectory + ' is not a string');
     }
 
-    var app = express();
+    var app = require('connectr').patch(express());
     app.set('assetify', require('assetify').instance());
 
     var database = require('./lib/initialisers/database'),
