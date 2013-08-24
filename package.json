@@ -10,6 +10,7 @@
     }
   ],
   "dependencies": {
+    "duffel-visor": "git+ssh://git@bitbucket.org/faceleg/duffel-visor.git#develop",
     "controller-loader": "0.0.x",
     "async": "0.2.x",
     "express": "3.x.x",
