@@ -1,16 +1,20 @@
 {
   "name": "duffel-bootstrap",
   "author": "Michael Robinson <mike@pagesofinterest.net>",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Provides a convenient bootstrapper for a typical website",
   "contributors": [
     {
-      "name": "Michael Robinson",
-      "email": "mike@pagesofinterest.net"
-    }
+    "name": "Michael Robinson",
+    "email": "mike@pagesofinterest.net"
+  }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BrownPaperBag/duffel-bootstrap"
+  },
   "dependencies": {
-    "duffel-visor": "0.x.x",
+    "duffel-visor": "0.0.x",
     "controller-loader": "0.0.x",
     "async": "0.2.x",
     "express": "3.x.x",
