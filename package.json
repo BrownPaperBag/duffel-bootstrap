@@ -1,7 +1,7 @@
 {
   "name": "duffel-bootstrap",
   "author": "Michael Robinson <mike@pagesofinterest.net>",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Provides a convenient bootstrapper for a typical website",
   "contributors": [
     {
@@ -17,7 +17,7 @@
     "duffel-visor": "0.0.x",
     "controller-loader": "0.0.x",
     "async": "0.2.x",
-    "express": "3.x.x",
+    "express": "3.3.x",
     "nunjucks": "git://github.com/jlongster/nunjucks.git#master",
     "connect-mongo": "0.3.x",
     "connect-flash": "0.1.x",
