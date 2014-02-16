@@ -24,7 +24,6 @@ module.exports = {
       require('./lib/initialisers/local'),
       require('./lib/initialisers/nunjucks'),
       require('./lib/initialisers/template-locals'),
-      require('./lib/initialisers/visor'),
       require('./lib/initialisers/application'),
       require('./lib/initialisers/initialisers'),
       require('./lib/initialisers/intermediate-middleware'),
