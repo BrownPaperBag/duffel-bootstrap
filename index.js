@@ -20,6 +20,7 @@ module.exports = {
         });
       },
       require('./lib/initialisers/database'),
+      require('./lib/initialisers/asset-manager'),
       require('./lib/initialisers/local'),
       require('./lib/initialisers/nunjucks'),
       require('./lib/initialisers/template-locals'),
@@ -27,7 +28,7 @@ module.exports = {
       require('./lib/initialisers/initialisers'),
       require('./lib/initialisers/intermediate-middleware'),
       require('./lib/initialisers/application-controllers'),
-      require('./lib/initialisers/assetify-compile'),
+      require('./lib/initialisers/asset-manager-compile'),
       require('./lib/initialisers/final-setup')
     ], function(error) {
       applicationCallback(error, app);
