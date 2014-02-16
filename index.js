@@ -5,7 +5,6 @@ var async = require('async'),
 module.exports = {
   run: function(rootDirectory, applicationCallback) {
     var app = require('connectr').patch(express());
-    app.set('assetify', require('assetify').instance());
 
     async.waterfall([
       function checkRootDirectory(callback) {
