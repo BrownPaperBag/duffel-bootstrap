@@ -4,26 +4,15 @@ var async = require('async'),
 
 module.exports = {
   run: function(rootDirectory, applicationCallback) {
-    if (typeof rootDirectory !== 'string') {
-      throw new Error('Root directory is required - ' + rootDirectory + ' is not a string');
-    }
-
     var app = require('connectr').patch(express());
     app.set('assetify', require('assetify').instance());
 
-    var database = require('./lib/initialisers/database'),
-      local = require('./lib/initialisers/local'),
-      nunjucks = require('./lib/initialisers/nunjucks'),
-      visor = require('./lib/initialisers/visor'),
-      application = require('./lib/initialisers/application'),
-      initialisers = require('./lib/initialisers/initialisers'),
-      intermediateMiddleware = require('./lib/initialisers/intermediate-middleware'),
-      applicationControllers = require('./lib/initialisers/application-controllers'),
-      assetifyCompile = require('./lib/initialisers/assetify-compile'),
-      finalSetup = require('./lib/initialisers/final-setup');
-
     async.waterfall([
       function checkRootDirectory(callback) {
+        if (typeof rootDirectory !== 'string') {
+          throw new Error('Root directory is required - ' + rootDirectory + ' is not a string');
+        }
+
         fs.exists(rootDirectory, function(exists) {
           if (!exists) {
             return callback(new Error('Root directory is required - ' + rootDirectory + ' does not exists'));
@@ -31,16 +20,17 @@ module.exports = {
           return callback(null, app, rootDirectory);
         });
       },
-      database,
-      local,
-      nunjucks,
-      visor,
-      application,
-      intermediateMiddleware,
-      initialisers,
-      assetifyCompile,
-      applicationControllers,
-      finalSetup,
+      require('./lib/initialisers/database'),
+      require('./lib/initialisers/local'),
+      require('./lib/initialisers/nunjucks'),
+      require('./lib/initialisers/template-locals'),
+      require('./lib/initialisers/visor'),
+      require('./lib/initialisers/application'),
+      require('./lib/initialisers/initialisers'),
+      require('./lib/initialisers/intermediate-middleware'),
+      require('./lib/initialisers/application-controllers'),
+      require('./lib/initialisers/assetify-compile'),
+      require('./lib/initialisers/final-setup')
     ], function(error) {
       applicationCallback(error, app);
     });
