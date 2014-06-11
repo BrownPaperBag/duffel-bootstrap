@@ -27,8 +27,8 @@ module.exports = {
       require('./lib/initialisers/application'),
       require('./lib/initialisers/initialisers'),
       require('./lib/initialisers/intermediate-middleware'),
-      require('./lib/initialisers/application-controllers'),
       require('./lib/initialisers/asset-manager-compile'),
+      require('./lib/initialisers/application-controllers'),
       require('./lib/initialisers/final-setup')
     ], function(error) {
       applicationCallback(error, app);
