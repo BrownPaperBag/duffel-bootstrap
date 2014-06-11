@@ -14,14 +14,20 @@
     "url": "https://github.com/BrownPaperBag/duffel-bootstrap"
   },
   "dependencies": {
-    "controller-loader": "0.0.x",
-    "async": "0.2.x",
-    "express": "3.3.x",
-    "nunjucks": "git://github.com/jlongster/nunjucks.git#master",
-    "connect-mongo": "0.3.x",
-    "connect-flash": "0.1.x",
-    "connect-powered-by": "0.1.x",
-    "mongoose": "3.6.x",
-    "connectr": "0.0.5"
+    "controller-loader": "",
+    "async": "",
+    "express": "",
+    "nunjucks": "",
+    "connect-mongo": "",
+    "connect-flash": "",
+    "express-session": "",
+    "cookie-parser": "",
+    "method-override": "",
+    "csurf": "",
+    "body-parser": "",
+    "connect-powered-by": "",
+    "morgan": "",
+    "mongoose": "",
+    "connectr": "latest"
   }
 }
