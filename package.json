@@ -28,6 +28,6 @@
     "connect-powered-by": "",
     "morgan": "",
     "mongoose": "",
-    "connectr": "latest"
+    "connectr": ""
   }
 }
