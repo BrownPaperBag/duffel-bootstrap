@@ -21,17 +21,22 @@ module.exports = {
           return callback(null, app);
         });
       },
+      require('./lib/initialisers/initial-setup'),
       require('./lib/initialisers/database'),
       require('./lib/initialisers/asset-manager'),
       require('./lib/initialisers/local'),
       require('./lib/initialisers/nunjucks'),
       require('./lib/initialisers/template-locals'),
       require('./lib/initialisers/application'),
+      require('./lib/initialisers/duffel-visor'),
+      require('./lib/initialisers/duffel-auth'),
+      require('./lib/initialisers/duffel-requests-catchall'),
+      require('./lib/initialisers/duffel-pages-catchall'),
       require('./lib/initialisers/initialisers'),
       require('./lib/initialisers/intermediate-middleware'),
       require('./lib/initialisers/duffel-cms'),
-      require('./lib/initialisers/duffel-pages'),
       require('./lib/initialisers/duffel-requests'),
+      require('./lib/initialisers/duffel-pages'),
       require('./lib/initialisers/asset-manager-compile'),
       require('./lib/initialisers/application-controllers'),
       require('./lib/initialisers/final-setup')
