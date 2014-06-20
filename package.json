@@ -19,7 +19,7 @@
     "express": "",
     "express-error-handler": "",
     "nunjucks": "",
-    "jugglingdb": "",
+    "promised-jugglingdb": "",
     "connect-jugglingdb": "",
     "connect-flash": "",
     "express-session": "",
