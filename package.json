@@ -17,8 +17,10 @@
     "controller-loader": "",
     "async": "",
     "express": "",
+    "express-error-handler": "",
     "nunjucks": "",
-    "connect-mongo": "",
+    "jugglingdb": "",
+    "connect-jugglingdb": "",
     "connect-flash": "",
     "express-session": "",
     "cookie-parser": "",
@@ -27,11 +29,11 @@
     "body-parser": "",
     "connect-powered-by": "",
     "morgan": "",
-    "mongoose": "",
     "connectr": "",
     "duffel-requests": "",
     "duffel-cms": "",
     "duffel-cms-raptor-editor": "",
-    "duffel-pages": ""
+    "duffel-pages": "",
+    "duffel-visor": ""
   }
 }
