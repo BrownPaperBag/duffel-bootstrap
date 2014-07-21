@@ -17,7 +17,6 @@
     "controller-loader": "",
     "async": "",
     "express": "",
-    "express-error-handler": "",
     "nunjucks": "",
     "loopback-datasource-juggler": "",
     "connect-loopback-datasource-juggler": "",
