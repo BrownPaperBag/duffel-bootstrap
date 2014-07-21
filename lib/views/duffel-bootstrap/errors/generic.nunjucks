@@ -1,0 +1,7 @@
+{% block content %}
+<div class="text-center">
+  <h1>{$ error.status $} - {$ error.message $}</h1>
+  <pre>{$ error.stack $}</pre>
+</div>
+{% endblock %}
+
