@@ -29,6 +29,7 @@
     "connect-powered-by": "",
     "morgan": "",
     "connectr": "",
+    "duffel-asset-manager": "",
     "duffel-requests": "",
     "duffel-cms": "",
     "duffel-cms-raptor-editor": "",
