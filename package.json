@@ -28,7 +28,7 @@
     "body-parser": "",
     "connect-powered-by": "",
     "morgan": "",
-    "connectr": "faceleg/connectr",
+    "connectr": "git://github.com/faceleg/connectr#88e7e07f3e4e58437bd2e870b8ccce31ea472dab",
     "duffel-auth": "",
     "duffel-asset-manager": "",
     "duffel-requests": "",
