@@ -28,7 +28,7 @@
     "body-parser": "",
     "connect-powered-by": "",
     "morgan": "",
-    "connectr": "",
+    "connectr": "faceleg/connectr",
     "duffel-auth": "",
     "duffel-asset-manager": "",
     "duffel-requests": "",
