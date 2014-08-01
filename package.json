@@ -1,7 +1,7 @@
 {
   "name": "duffel-bootstrap",
   "author": "Michael Robinson <mike@pagesofinterest.net>",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Provides a convenient bootstrapper for a typical website",
   "contributors": [
     {
