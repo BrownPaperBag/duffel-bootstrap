@@ -19,7 +19,7 @@
     "express": "",
     "nunjucks": "",
     "loopback-datasource-juggler": "",
-    "connect-loopback-datasource-juggler": "",
+    "loopback-datasource-juggler-connect": "",
     "connect-flash": "",
     "express-session": "",
     "cookie-parser": "",
