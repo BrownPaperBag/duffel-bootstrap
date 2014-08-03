@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "controller-loader": "",
-    "async": "",
+    "bluebird": "",
     "express": "",
     "nunjucks": "",
     "loopback-datasource-juggler": "",
@@ -33,6 +33,7 @@
     "duffel-cms": "",
     "duffel-cms-raptor-editor": "",
     "duffel-pages": "",
+    "duffel-pages-meta": "",
     "duffel-visor": ""
   }
 }
