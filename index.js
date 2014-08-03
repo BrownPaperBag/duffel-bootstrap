@@ -9,7 +9,7 @@ module.exports = {
 
     app.set('rootDirectory', rootDirectory);
 
-    var bootstrappers = [
+    Promise.reduce([
       function checkRootDirectory(app, callback) {
         if (typeof rootDirectory !== 'string') {
           throw new Error('Root directory is required - ' + rootDirectory + ' is not a string');
@@ -42,9 +42,7 @@ module.exports = {
       './lib/initialisers/asset-manager-compile',
       './lib/initialisers/application-controllers',
       './lib/initialisers/final-setup'
-    ];
-
-    Promise.reduce(bootstrappers, function(total, bootstrapper, index) {
+    ], function(total, bootstrapper, index) {
       return new Promise(function(resolve, reject) {
 
         if (typeof bootstrapper === 'string') {
