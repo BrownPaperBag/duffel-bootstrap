@@ -1,6 +1,7 @@
 var async = require('async'),
   express = require('express'),
-  fs = require('fs');
+  fs = require('fs'),
+  Promise = require('bluebird');
 
 module.exports = {
   run: function(rootDirectory, applicationCallback) {
@@ -8,8 +9,8 @@ module.exports = {
 
     app.set('rootDirectory', rootDirectory);
 
-    async.waterfall([
-      function checkRootDirectory(callback) {
+    var bootstrappers = [
+      function checkRootDirectory(app, callback) {
         if (typeof rootDirectory !== 'string') {
           throw new Error('Root directory is required - ' + rootDirectory + ' is not a string');
         }
@@ -21,27 +22,45 @@ module.exports = {
           return callback(null, app);
         });
       },
-      require('./lib/initialisers/initial-setup'),
-      require('./lib/initialisers/database'),
-      require('./lib/initialisers/asset-manager'),
-      require('./lib/initialisers/local'),
-      require('./lib/initialisers/nunjucks'),
-      require('./lib/initialisers/template-locals'),
-      require('./lib/initialisers/application'),
-      require('./lib/initialisers/duffel-visor'),
-      require('./lib/initialisers/duffel-auth'),
-      require('./lib/initialisers/duffel-requests-catchall'),
-      require('./lib/initialisers/duffel-pages-catchall'),
-      require('./lib/initialisers/initialisers'),
-      require('./lib/initialisers/intermediate-middleware'),
-      require('./lib/initialisers/duffel-cms'),
-      require('./lib/initialisers/duffel-requests'),
-      require('./lib/initialisers/duffel-pages'),
-      require('./lib/initialisers/asset-manager-compile'),
-      require('./lib/initialisers/application-controllers'),
-      require('./lib/initialisers/final-setup')
-    ], function(error) {
-      applicationCallback(error, app);
+      './lib/initialisers/initial-setup',
+      './lib/initialisers/database',
+      './lib/initialisers/asset-manager',
+      './lib/initialisers/local',
+      './lib/initialisers/nunjucks',
+      './lib/initialisers/template-locals',
+      './lib/initialisers/application',
+      './lib/initialisers/duffel-visor',
+      './lib/initialisers/duffel-auth',
+      './lib/initialisers/duffel-requests-catchall',
+      './lib/initialisers/duffel-pages-catchall',
+      './lib/initialisers/initialisers',
+      './lib/initialisers/intermediate-middleware',
+      './lib/initialisers/duffel-cms',
+      './lib/initialisers/duffel-requests',
+      './lib/initialisers/duffel-pages',
+      './lib/initialisers/duffel-pages-meta',
+      './lib/initialisers/asset-manager-compile',
+      './lib/initialisers/application-controllers',
+      './lib/initialisers/final-setup'
+    ];
+
+    Promise.reduce(bootstrappers, function(total, bootstrapper, index) {
+      return new Promise(function(resolve, reject) {
+
+        if (typeof bootstrapper === 'string') {
+          bootstrapper = require(bootstrapper);
+        }
+
+        bootstrapper(app, function(error) {
+          if (error) return reject(error);
+          console.log('Duffel: ' + bootstrapper.name);
+          resolve();
+        });
+      });
+    }, 0).then(function(total) {
+      console.log('Duffel bootstrap complete');
+    }).catch(function(error) {
+      throw error;
     });
   }
 };
