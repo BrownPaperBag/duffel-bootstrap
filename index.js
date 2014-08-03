@@ -49,16 +49,19 @@ module.exports = {
           bootstrapper = require(bootstrapper);
         }
 
+        var timerName = 'Duffel bootstrap ' + bootstrapper.name;
+        console.time(timerName);
         bootstrapper(app, function(error) {
           if (error) return reject(error);
-          console.log('Duffel: ' + bootstrapper.name);
+          console.timeEnd(timerName);
           resolve();
         });
       });
     }, 0).then(function(total) {
       console.log('Duffel bootstrap complete');
+      applicationCallback(null, app);
     }).catch(function(error) {
-      throw error;
+      applicationCallback(error);
     });
   }
 };
