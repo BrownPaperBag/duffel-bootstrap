@@ -5,6 +5,8 @@ var async = require('async'),
 
 module.exports = {
   run: function(rootDirectory, applicationCallback) {
+
+    console.time('Duffel bootstrap');
     var app = require('connectr').patch(express());
 
     app.set('rootDirectory', rootDirectory);
@@ -33,12 +35,12 @@ module.exports = {
       './lib/initialisers/duffel-auth',
       './lib/initialisers/duffel-requests-catchall',
       './lib/initialisers/duffel-pages-catchall',
-      './lib/initialisers/initialisers',
       './lib/initialisers/intermediate-middleware',
       './lib/initialisers/duffel-cms',
       './lib/initialisers/duffel-requests',
       './lib/initialisers/duffel-pages',
       './lib/initialisers/duffel-pages-meta',
+      './lib/initialisers/initialisers',
       './lib/initialisers/asset-manager-compile',
       './lib/initialisers/application-controllers',
       './lib/initialisers/final-setup'
@@ -58,9 +60,10 @@ module.exports = {
         });
       });
     }, 0).then(function(total) {
-      console.log('Duffel bootstrap complete');
+      console.timeEnd('Duffel bootstrap');
       applicationCallback(null, app);
     }).catch(function(error) {
+      console.timeEnd('Duffel bootstrap');
       applicationCallback(error);
     });
   }
